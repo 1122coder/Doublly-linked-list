@@ -1,0 +1,303 @@
+# These are supported funding model platforms
+
+github: # Replace with up to 4 GitHub Sponsors-enabled usernames e.g., [user1, user2]
+patreon: # Replace with a single Patreon username
+open_collective: # Replace with a single Open Collective username
+ko_fi: # Replace with a single Ko-fi username
+tidelift: # Replace with a single Tidelift platform-name/package-name e.g., npm/babel
+community_bridge: # Replace with a single Community Bridge project-name e.g., cloud-foundry
+liberapay: # Replace with a single Liberapay username
+issuehunt: # Replace with a single IssueHunt username
+otechie: # Replace with a single Otechie username
+custom: # Replace with up to 4 custom sponsorship URLs e.g., ['link1', 'link2']
+//Malik Muhammad Kashif Saeed
+
+#include <iostream>
+
+using namespace std;
+struct Doub_ll {
+    int data;
+    Doub_ll *prev;
+    Doub_ll *next;
+};
+
+class List {
+private:
+    Doub_ll *head, *tail;
+
+public:
+    List();
+    bool new_node(int data);
+    bool insert_at_beg(int data);
+    bool insert_at_loc(int data, int no);
+    bool insert_at_end(int data);
+    bool del_fir_record();
+    bool del_at_end();
+    bool del_at_location(int no);
+    void display();
+
+};
+
+List::List(){
+        head=tail=NULL;
+}
+
+bool List::new_node(int data){
+    Doub_ll *node=new Doub_ll;
+    node->data=data;
+    node->next=NULL;
+    node->prev=NULL;
+
+    if(!head){
+        head=node;
+        tail=node;
+        node->prev=head;
+        node=NULL;
+        return true;
+    }else{
+    ;
+    tail->next=node;
+    tail=tail->next;
+    tail->prev=head;
+    return true;
+    }
+    return false;
+}
+
+bool List::insert_at_loc(int data, int no){
+    if(!head){
+        cout<<"Link List not exit"<<endl;
+        return false;
+    }else {
+        int count_n=1;
+        Doub_ll *Trav=head;
+
+        while(Trav != NULL){
+        if(count_n==no){
+                Doub_ll *node=new Doub_ll;
+                node->data=data;
+                node->next=NULL;
+                node->prev=NULL;
+                if(Trav->next != tail){
+                     node->prev=Trav->prev;
+                     Trav->prev->next=node;
+                     node->next=Trav;
+                     Trav->prev=node;
+                     return true;
+                }else if(Trav->next == tail){
+                     Trav->next=node;
+                     tail->prev=node;
+                     node->next=tail;
+                     node->prev=Trav;
+                     Trav=node;
+                     return true;
+                }
+            }
+            count_n++;
+            Trav=Trav->next;
+    }
+        }
+
+        return false;
+}
+
+
+bool List::insert_at_beg(int data){
+    Doub_ll *node=new Doub_ll;
+    node->data=data;
+    node->next=NULL;
+    node->prev=NULL;
+
+    if(!head){
+        cout<<"No Linked List is created"<<endl;
+        return false;
+    }else {
+    node->next=head;
+    head->prev=node;
+    head=node;
+    return true;
+    }
+    return false;
+}
+
+bool List::insert_at_end(int data){
+     Doub_ll *node=new Doub_ll;
+    node->data=data;
+    node->next=NULL;
+    node->prev=NULL;
+
+    if(!head){
+        cout<<"List is not created"<<endl;
+        return false;
+    }else {
+    tail->next=node;
+    node->prev=tail;
+    tail=node;
+    return true;
+    }
+    return false;
+}
+
+bool List::del_fir_record(){
+    if(!head){
+        cout<<"No record Exits"<<endl;
+        return false;
+    }else {
+    Doub_ll *fir = new Doub_ll;
+    fir=head;
+    head=head->next;
+    fir->next=NULL;
+    delete fir;
+    return true;
+    }
+    return false;
+}
+
+bool List::del_at_location(int no){
+    Doub_ll *current=NULL;
+    if(head){
+        current=head;
+    }
+    if( no == 1){
+        head=head->next;
+        current->next=NULL;
+        head=head->prev=NULL;
+        current=NULL;
+        delete current;
+        return false;
+    }else if(no > 1){
+        int count_no=1;
+        Doub_ll *backpr;
+        backpr=NULL;
+    while(current != NULL){
+        if(count_no == no && count_no==NULL ){
+           backpr->next=NULL;
+           current->prev=NULL;
+           tail=backpr;
+           current=NULL;
+           delete current;
+           return true;
+        }else if(count_no == no && count_no!=NULL){
+            current->next->prev=current->prev;
+            current->prev=NULL;
+            backpr->next=current->next;
+            current->next=NULL;
+            current=NULL;
+            delete current;
+            return true;
+        }
+        backpr=current;
+        current=current->next;
+        count_no++;
+        }
+    }
+    return false;
+}
+
+bool List::del_at_end(){
+    if(!head){
+         cout<<"No record Exits"<<endl;
+        return false;
+    }else {
+        Doub_ll *tem=new Doub_ll;
+        tem=head;
+        while(tem->next !=tail){
+            tem=tem->next;
+        }
+        tail=tem;
+        tem=tem->next;
+        tail->next=NULL;;
+        tem->next=NULL;
+        delete tem;
+
+        return true;
+    }
+    return false;
+}
+
+void List::display(){
+        if(!head){
+        cout<<"Data not Available!"<<endl;
+    }
+    else{
+        Doub_ll *Trav= new Doub_ll;
+        Trav=head;
+        int Number=1;
+        while(Trav !=NULL){
+            cout<<"Data No:"<<Number<<endl;
+            cout<<" "<<Trav->data<<endl;
+
+            Number++;
+            Trav = Trav->next;
+        }
+    }
+}
+
+int main()
+{
+    List obj;
+    obj.new_node(2);
+    obj.new_node(3);
+    obj.new_node(5);
+    obj.new_node(6);
+    obj.new_node(7);
+    obj.display();
+
+    cout<<"Choose, What do you want to do?"<<endl;
+    cout<<"1. ->To insert Node at the Beginning Press 1"<<endl;
+    cout<<"2. ->To insert Node at any Location Press 2"<<endl;
+    cout<<"3. ->To insert Node at the End Press 3"<<endl;
+    cout<<"4. -> Delete the first node 4"<<endl;
+    cout<<"5. -> Delete the Last Node 5"<<endl;
+    cout<<"6. -> Delete at any Location 6"<<endl;
+    cout<<"7. ->To Exit Press 7"<<endl;
+    int no;
+    cin>>no;
+    switch(no){
+case 1:
+    cout<<"------------------------------------------"<<endl;
+    cout<<"Adding Node at the beginning"<<endl;
+    obj.insert_at_beg(1);
+    obj.display();
+    break;
+case 2:
+    cout<<"------------------------------------------"<<endl;
+    cout<<"Adding at Given Location"<<endl;
+    obj.insert_at_loc(4 , 3);
+    obj.display();
+    break;
+case 3:
+    cout<<"------------------------------------------"<<endl;
+    cout<<"Adding List at the End"<<endl;
+    obj.insert_at_end(8);
+    obj.display();
+    break;
+case 4:
+    cout<<"------------------------------------------"<<endl;
+    cout<<"Deleting the First node"<<endl;
+    obj.del_fir_record();
+    obj.display();
+    break;
+case 5:
+    cout<<"------------------------------------------"<<endl;
+    cout<<"Deleting the First node"<<endl;
+    obj.del_at_end();
+    obj.display();
+    break;
+
+case 6:
+    cout<<"------------------------------------------"<<endl;
+    cout<<"Deleting at nth Locaton"<<endl;
+    obj.del_at_location(3);
+    obj.display();
+    break;
+case 7:
+    cout<<"Exits! Now Press Enter"<<endl;
+    break;
+default:
+        cout<<"------------------------------------------"<<endl;
+        cout<<"\t"<<"ERROR! Jani"<<endl;
+        cout<<"------------------------------------------"<<endl;
+    }
+    return 0;
+}
